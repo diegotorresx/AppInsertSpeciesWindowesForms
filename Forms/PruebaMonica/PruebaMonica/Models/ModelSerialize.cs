@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace InsertSpecies.Models
 {
-    public class Model
+    public class ModelSerialize
     {
-        public string id { get; set; }
         public string Nombre_Comun { get; set; }
         public string Nombre_Cientifico { get; set; }
         public string Sinonimos { get; set; }

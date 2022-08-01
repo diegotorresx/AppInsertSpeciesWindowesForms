@@ -3,69 +3,100 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
+using System.Net;
+using Newtonsoft.Json;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using PruebaMonica.Models;
+using InsertSpecies.Models;
+using System.Windows;
 
 namespace PruebaMonica.Queries
 {
     public class DataLayer
     {
         private string connection { get; set; }
+        
         public DataLayer(string conection)
         {
             connection = conection;
         }
 
-        //Metodo para traer todos los datos de la base de datos
-        public List<Model> selectAllData()
+        //Metodo get
+        public async Task<List<Model>> getData()
         {
-            using (IDbConnection db = new SqlConnection(connection))
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri(connection);
+            request.Method = HttpMethod.Get;
+            request.Headers.Add("Accept", "application/json");
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                db.Open();
-                return db.Query<Model>("sp_SelectAll", CommandType.StoredProcedure).ToList();
+                string content = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<Model>>(content);
+                return result;
+            }
+
+            return new List<Model>();
+        }
+        //Metodo Delete
+        public async void DeleteData(string id)
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri(string.Format(connection+"?id={0}",id));
+            request.Method = HttpMethod.Delete;
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
+            {
+                string content = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<Model>>(content);
+                
             }
         }
 
-        //Metodo para insertar datos en la Base de Datos
-        public void InsertData(Model data)
+        //Metodo Insert
+        public async void InsertData(ModelSerialize specie)
         {
-            using (IDbConnection db = new SqlConnection(connection))
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri(string.Format(connection));
+            request.Method = HttpMethod.Post;
+            string serialize = JsonConvert.SerializeObject(specie);
+            serialize = serialize.Replace("{", "[{").Replace("}","}]");
+            var contentPost = new StringContent(serialize, Encoding.UTF8, "application/json");
+            request.Content = contentPost;
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                db.Open();
-                db.Execute("sp_InsertInfo", new {nombre = data.nombre, correo = data.correo, fecha_nacimiento = data.fecha_nacimiento }, commandType: CommandType.StoredProcedure);
+                string contentResponse = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<Model>>(contentResponse);
+
             }
         }
-        public Model SelectById(int id)
+        //Metodo Update
+        public async void UpdateData(ModelSerialize specie, string id)
         {
-            try
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri(string.Format(connection + "?id={0}",id));
+            request.Method = HttpMethod.Put;
+            string content = JsonConvert.SerializeObject(specie);
+            content = content.Replace("{", "[{\"id\":{0},");
+            content = content.Replace("{0}",id).Replace("}", "}]");
+            var contentPost = new StringContent(content, Encoding.UTF8, "application/json");
+            request.Content = contentPost;
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.StatusCode == HttpStatusCode.OK)
             {
-                using (IDbConnection db = new SqlConnection(connection))
-                {
-                    db.Open();
-                    return db.Query<Model>("sp_SelectById", new { id = id }, commandType: CommandType.StoredProcedure).FirstOrDefault();
-                }
-            }
-            catch(Exception ex)
-            {
-                throw ex;
-            }
-        }
-        public void UpdateData(Model data)
-        {
-            using (IDbConnection db = new SqlConnection(connection))
-            {
-                db.Open();
-                db.Execute("sp_Update", new { id = data.id, nombre = data.nombre, correo = data.correo, fecha_nacimiento = data.fecha_nacimiento }, commandType: CommandType.StoredProcedure);
-            }
-        }
-        public void DeleteData(int id)
-        {
-            using (IDbConnection db = new SqlConnection(connection))
-            {
-                db.Open();
-                db.Execute("sp_Delete", new { id = id}, commandType: CommandType.StoredProcedure);
+                string contentResponse = await response.Content.ReadAsStringAsync();
+                var result = JsonConvert.DeserializeObject<List<Model>>(contentResponse);
+
             }
         }
     }
