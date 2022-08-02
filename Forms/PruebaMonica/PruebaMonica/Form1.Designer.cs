@@ -29,10 +29,11 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.btnDelete = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.btnDelete = new System.Windows.Forms.Button();
+            this.CargaMasiva = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -51,6 +52,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.CargaMasiva);
             this.splitContainer1.Panel1.Controls.Add(this.btnDelete);
             this.splitContainer1.Panel1.Controls.Add(this.button2);
             this.splitContainer1.Panel1.Controls.Add(this.button1);
@@ -61,6 +63,16 @@
             this.splitContainer1.Size = new System.Drawing.Size(800, 450);
             this.splitContainer1.SplitterDistance = 82;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // btnDelete
+            // 
+            this.btnDelete.Location = new System.Drawing.Point(494, 33);
+            this.btnDelete.Name = "btnDelete";
+            this.btnDelete.Size = new System.Drawing.Size(75, 23);
+            this.btnDelete.TabIndex = 2;
+            this.btnDelete.Text = "Eliminar";
+            this.btnDelete.UseVisualStyleBackColor = true;
+            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
             // 
             // button2
             // 
@@ -94,15 +106,15 @@
             this.dataGridView1.Size = new System.Drawing.Size(800, 364);
             this.dataGridView1.TabIndex = 0;
             // 
-            // btnDelete
+            // CargaMasiva
             // 
-            this.btnDelete.Location = new System.Drawing.Point(494, 33);
-            this.btnDelete.Name = "btnDelete";
-            this.btnDelete.Size = new System.Drawing.Size(75, 23);
-            this.btnDelete.TabIndex = 2;
-            this.btnDelete.Text = "Eliminar";
-            this.btnDelete.UseVisualStyleBackColor = true;
-            this.btnDelete.Click += new System.EventHandler(this.btnDelete_Click);
+            this.CargaMasiva.Location = new System.Drawing.Point(12, 12);
+            this.CargaMasiva.Name = "CargaMasiva";
+            this.CargaMasiva.Size = new System.Drawing.Size(98, 44);
+            this.CargaMasiva.TabIndex = 3;
+            this.CargaMasiva.Text = "Carga Masiva";
+            this.CargaMasiva.UseVisualStyleBackColor = true;
+            this.CargaMasiva.Click += new System.EventHandler(this.CargaMasiva_Click);
             // 
             // Form1
             // 
@@ -129,5 +141,6 @@
         private Button button1;
         private Button button2;
         private Button btnDelete;
+        private Button CargaMasiva;
     }
 }
