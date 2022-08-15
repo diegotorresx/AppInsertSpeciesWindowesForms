@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.CargaMasiva = new System.Windows.Forms.Button();
             this.btnDelete = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.CargaMasiva = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -63,6 +63,16 @@
             this.splitContainer1.Size = new System.Drawing.Size(800, 450);
             this.splitContainer1.SplitterDistance = 82;
             this.splitContainer1.TabIndex = 0;
+            // 
+            // CargaMasiva
+            // 
+            this.CargaMasiva.Location = new System.Drawing.Point(12, 12);
+            this.CargaMasiva.Name = "CargaMasiva";
+            this.CargaMasiva.Size = new System.Drawing.Size(98, 44);
+            this.CargaMasiva.TabIndex = 3;
+            this.CargaMasiva.Text = "Carga Masiva";
+            this.CargaMasiva.UseVisualStyleBackColor = true;
+            this.CargaMasiva.Click += new System.EventHandler(this.CargaMasiva_Click);
             // 
             // btnDelete
             // 
@@ -96,25 +106,15 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.ClipboardCopyMode = System.Windows.Forms.DataGridViewClipboardCopyMode.EnableAlwaysIncludeHeaderText;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dataGridView1.Location = new System.Drawing.Point(0, 0);
-            this.dataGridView1.MultiSelect = false;
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 25;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(800, 364);
             this.dataGridView1.TabIndex = 0;
-            // 
-            // CargaMasiva
-            // 
-            this.CargaMasiva.Location = new System.Drawing.Point(12, 12);
-            this.CargaMasiva.Name = "CargaMasiva";
-            this.CargaMasiva.Size = new System.Drawing.Size(98, 44);
-            this.CargaMasiva.TabIndex = 3;
-            this.CargaMasiva.Text = "Carga Masiva";
-            this.CargaMasiva.UseVisualStyleBackColor = true;
-            this.CargaMasiva.Click += new System.EventHandler(this.CargaMasiva_Click);
             // 
             // Form1
             // 
